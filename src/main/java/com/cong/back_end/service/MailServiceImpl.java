@@ -33,6 +33,7 @@ public class MailServiceImpl implements MailService{
         mailMessage.setTo(to);
         mailMessage.setSubject(title);
         mailMessage.setText(content);
+        // System.out.println(mailMessage);
         javaMailSender.send(mailMessage);
         log.info("邮件发送成功");
     }
