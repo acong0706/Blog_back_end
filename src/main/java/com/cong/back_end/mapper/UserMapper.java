@@ -15,4 +15,13 @@ public interface UserMapper {
     
     // 登录验证
     User selectUser(User user);
+    
+    // 用户注册
+    int insertNewUser(User user);
+    
+    // 账号更新
+    int updateAccount(User user);
+    
+    // 验证邮箱唯一性
+    User selectUserByEmail(User user);
 }

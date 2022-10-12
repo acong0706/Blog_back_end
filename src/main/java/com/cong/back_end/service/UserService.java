@@ -11,4 +11,7 @@ public interface UserService {
     
     // 登录验证
     User selectUser(User user);
+    
+    // 注册
+    String registerNewUser(User user);
 }

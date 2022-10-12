@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class RestResponse<T> {
+public class RestResponse {
     
     public static final String SUCCESS_MSG = "邮箱发送成功";
     public static final String FAILURE_MSG = "邮箱发送失败";
@@ -22,7 +22,7 @@ public class RestResponse<T> {
     private Integer code;
     
     private String msg;
-    private T data;
+    private String data;
     
     public RestResponse(Integer code, String msg) {
         this.code = code;
@@ -34,7 +34,11 @@ public class RestResponse<T> {
         return new RestResponse(RestResponse.FAILURE_CODE, e.getMessage());
     }
     
-    public static RestResponse buildSuccessResp(Object data) {
+    public static RestResponse buildSuccessResp(String data) {
         return new RestResponse(RestResponse.SUCCESS_CODE, RestResponse.SUCCESS_MSG, data);
+    }
+    
+    public static RestResponse buildSuccessResp() {
+        return new RestResponse(RestResponse.SUCCESS_CODE, RestResponse.SUCCESS_MSG);
     }
 }

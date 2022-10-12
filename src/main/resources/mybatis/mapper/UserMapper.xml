@@ -4,8 +4,24 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.cong.back_end.mapper.UserMapper">
     
+    <!--登录验证-->
     <select id="selectUser" resultType="User">
         select * from mybatis.User where account = #{account} and pwd = #{pwd}
+    </select>
+    
+    <!--用户注册-->
+    <insert id="insertNewUser" parameterType="User" useGeneratedKeys="true" keyProperty="id">
+        insert into mybatis.User(username,email,pwd) values (#{username},#{email},#{pwd})
+    </insert>
+    
+    <!--账号信息更新-->
+    <update id="updateAccount" parameterType="User">
+        update mybatis.User set account = #{account} where id = #{id}
+    </update>
+    
+    <!--邮箱唯一性验证-->
+    <select id="selectUserByEmail" resultType="User">
+        select * from mybatis.User where email = #{email}
     </select>
     
 </mapper>
