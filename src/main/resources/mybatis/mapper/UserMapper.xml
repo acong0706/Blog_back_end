@@ -24,4 +24,9 @@
         select * from mybatis.User where email = #{email}
     </select>
     
+    <!--密码修改-->
+    <update id="updatePwd" parameterType="User">
+        update mybatis.User set pwd = #{pwd} where email = #{email}
+    </update>
+    
 </mapper>

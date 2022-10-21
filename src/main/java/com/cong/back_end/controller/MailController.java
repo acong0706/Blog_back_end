@@ -32,13 +32,24 @@ public class MailController {
     
     @PostMapping("/getCheckCode")
     public RestResponse getCheckCode(UsersBo usersBo, HttpSession httpSession) {
-        // System.out.println(usersBo);
+        String msg1 = "哈喽，亲爱的新用户哟！您的注册验证码为：";
+        String msg2 = "Cong的博客-注册验证码";
+        return checkCode(usersBo, httpSession, msg1, msg2);
+    }
+    
+    @PostMapping("/getCheckCode2")
+    public RestResponse getCheckCode2(UsersBo usersBo, HttpSession httpSession) {
+        String msg1 = "哈喽，可爱的用户哟！您的密码重置验证码为：";
+        String msg2 = "Cong的博客-密码重置验证码";
+        return checkCode(usersBo, httpSession, msg1, msg2);
+    }
+    
+    private RestResponse checkCode(UsersBo usersBo, HttpSession httpSession, String msg1, String msg2) {
         String checkCode = String.valueOf(new Random().nextInt(899999) + 100000);
-        String message = "哈喽，亲爱的新用户哟！您的注册验证码为：" + checkCode;
-        // System.out.println(message);
+        String message = msg1 + checkCode;
         try {
             // 邮箱发送功能
-            mailService.sendSimpleMail(usersBo.getEmail(), "Cong的博客-注册验证码", message);
+            mailService.sendSimpleMail(usersBo.getEmail(), msg2, message);
             httpSession.setAttribute("checkCode", checkCode);
         } catch (Exception e) {
             restResponse = RestResponse.buildFailureResp(e);

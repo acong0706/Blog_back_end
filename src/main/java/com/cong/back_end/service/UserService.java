@@ -14,4 +14,10 @@ public interface UserService {
     
     // 注册
     String registerNewUser(User user);
+    
+    // 更改密码
+    boolean updatePwd(User user);
+    
+    // 用户是否存在
+    boolean haveUser(User user);
 }

@@ -41,4 +41,19 @@ public class UserServiceImpl implements UserService {
         userMapper.updateAccount(user);
         return user.getAccount();
     }
+    
+    @Override
+    public boolean updatePwd(User user) {
+        int num = userMapper.updatePwd(user);
+        return num != 0;
+    }
+    
+    @Override
+    public boolean haveUser(User user) {
+        User temp = userMapper.selectUserByEmail(user);
+        if (temp != null) {
+            return true;
+        }
+        return false;
+    }
 }

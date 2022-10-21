@@ -24,4 +24,6 @@ public interface UserMapper {
     
     // 验证邮箱唯一性
     User selectUserByEmail(User user);
+    
+    int updatePwd(User user);
 }
