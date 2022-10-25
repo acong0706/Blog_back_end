@@ -40,11 +40,8 @@ public class UserController {
         if (resultUser == null) {
             jsonObject.put("result", false);
         } else {
-            // resultUser.setId(-1);
-            // resultUser.setPwd("");
-            // resultUser.setEmail("");
             jsonObject.put("result", true);
-            // jsonObject.put("user", resultUser);
+            jsonObject.put("username", resultUser.getUsername());
             token = new Token();
             String access_token = TokenUtils.sign(resultUser);
             token.setToken(access_token);

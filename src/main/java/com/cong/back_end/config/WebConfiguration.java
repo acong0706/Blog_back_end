@@ -65,6 +65,8 @@ public class WebConfiguration implements WebMvcConfigurer {
         excludePath.add("/mail/getCheckCode");  // 获取邮箱验证码
         excludePath.add("/mail/getCheckCode2");  // 重置密码的验证码
         excludePath.add("/token/getNewToken");  // 通过refreshToken生成新的token
+        excludePath.add("/article/getArticles");  // 获取所有文章基础信息
+        excludePath.add("/article/getArticle");  // 获取指定文章的全部信息
         excludePath.add("/error");  // token失效重新获取会先重定向到error，需要将其放行（此时暂无token）
         registry.addInterceptor(tokenInterceptor)
                 .addPathPatterns("/**")

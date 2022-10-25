@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cong.back_end.mapper.ArticleMapper">
+    
+    <insert id="insertArticle" parameterType="Article" useGeneratedKeys="true" keyProperty="id">
+        insert into mybatis.Article(author,title,content,publishDate,tags,editDate) values
+               (#{author},#{title},#{content},#{date},#{tags},#{date})
+    </insert>
+    
+    <select id="getAllArticles" resultType="Article">
+        select id,author,title,publishDate,tags from mybatis.Article
+    </select>
+    
+    <select id="getArticle" resultType="Article">
+        select * from mybatis.Article where id = #{id}
+    </select>
+</mapper>
