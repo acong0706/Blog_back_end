@@ -67,6 +67,7 @@ public class WebConfiguration implements WebMvcConfigurer {
         excludePath.add("/token/getNewToken");  // 通过refreshToken生成新的token
         excludePath.add("/article/getArticles");  // 获取所有文章基础信息
         excludePath.add("/article/getArticle");  // 获取指定文章的全部信息
+        excludePath.add("/article/addViews");  // 增加指定文章访问量
         excludePath.add("/error");  // token失效重新获取会先重定向到error，需要将其放行（此时暂无token）
         registry.addInterceptor(tokenInterceptor)
                 .addPathPatterns("/**")

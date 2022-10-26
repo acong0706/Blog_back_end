@@ -17,4 +17,8 @@ public interface ArticleService {
     List<Article> getAllArticles();
     
     Article getArticle(int id);
+    
+    int addViews(int id);
+    
+    boolean editArticle(Article article);
 }

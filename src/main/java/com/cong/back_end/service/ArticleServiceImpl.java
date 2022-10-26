@@ -37,8 +37,8 @@ public class ArticleServiceImpl implements ArticleService {
         result = new PublishResult();
         try {
             // 1.存储博客
-            int id = articleMapper.insertArticle(article);
-            result.setId(id);
+            articleMapper.insertArticle(article);
+            result.setId(article.getId());
             // 2.更新旧tag数目
             String[] oldTags = article.getOldTagsArray();
             for (String oldTag : oldTags) {
@@ -67,5 +67,44 @@ public class ArticleServiceImpl implements ArticleService {
     @Override
     public Article getArticle(int id) {
         return articleMapper.getArticle(id);
+    }
+    
+    @Override
+    public int addViews(int id) {
+        return articleMapper.addViews(id);
+    }
+    
+    @Override
+    @Transactional
+    public boolean editArticle(Article article) {
+        System.out.println("================");
+        System.out.println(article);
+        result = new PublishResult();
+        try {
+            // 1.存储博客
+            articleMapper.updateArticle(article);
+            // 2.对移除的tag进行数量减一
+            String[] removeTags = article.getRemoveTagsArray();
+            for (String removeTag : removeTags) {
+                System.out.println(removeTag);
+                tagsMapper.updateRemoveTag(removeTag);
+            }
+            // 3.对新增的旧标签进行数量加一
+            String[] beforeTags = article.getBeforeTagsArray();
+            for (String beforeTag : beforeTags) {
+                System.out.println(beforeTag);
+                tagsMapper.updateOldTag(beforeTag);
+            }
+            // 4.对新增的tag进行添加
+            String[] newTags = article.getNewTagsArray();
+            for (String newTag : newTags) {
+                System.out.println(newTag);
+                tagsMapper.insertTag(newTag);
+            }
+            System.out.println("================");
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
     }
 }

@@ -21,8 +21,13 @@ public class Article {
     private String publishDate;
     private String editDate;
     private String oldTags;
+    private String beforeTags;
     private String newTags;
+    private String removeTags;
     private String tags;
     private String[] oldTagsArray;
+    private String[] beforeTagsArray;
     private String[] newTagsArray;
+    private String[] removeTagsArray;
+    private int views;
 }

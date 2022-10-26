@@ -11,7 +11,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * @Author Cong
@@ -60,8 +62,35 @@ public class ArticleController {
     public JSONObject getArticle(Article article) {
         jsonObject = new JSONObject();
         article = articleService.getArticle(article.getId());
-        System.out.println(article);
+        // System.out.println(article);
         jsonObject.put("article", article);
+        return jsonObject;
+    }
+    
+    @PostMapping("/addViews")
+    public JSONObject addViews(Article article) {
+        jsonObject = new JSONObject();
+        int result = articleService.addViews(article.getId());
+        if (result > 0) {
+            jsonObject.put("result", true);
+        } else {
+            jsonObject.put("result", false);
+        }
+        return jsonObject;
+    }
+    
+    @PostMapping("/edit")
+    public JSONObject edit(Article article) {
+        System.out.println(article);
+        // 内容无误
+        article = dataProcess(article);
+        PublishResult result = new PublishResult();
+        result.setId(article.getId());
+        result.setResult(
+                articleService.editArticle(article)
+        );
+        jsonObject = new JSONObject();
+        jsonObject.put("result", result);
         return jsonObject;
     }
     
@@ -70,20 +99,62 @@ public class ArticleController {
         // 处理前：[0=springboot&1=docker]
         // 处理后：[springboot, docker] 和 springboot,docker
         String[] tagsString1 = article.getOldTags().split("&");
-        article.setOldTags(
-                LabelChange.labelArrayToString(tagsString1)
-        );
+        if (tagsString1.length == 0 || Objects.equals(tagsString1[0], "")) {
+            article.setOldTags("");
+            article.setOldTagsArray(new String[0]);
+        } else {
+            article.setOldTags(
+                    LabelChange.labelArrayToString(tagsString1)
+            );
+            article.setOldTagsArray(
+                    LabelChange.labelStringToArray(article.getOldTags())
+            );
+        }
         String[] tagsString2 = article.getNewTags().split("&");
-        article.setNewTags(
-                LabelChange.labelArrayToString(tagsString2)
-        );
-        article.setOldTagsArray(
-                LabelChange.labelStringToArray(article.getOldTags())
-        );
-        article.setNewTagsArray(
-                LabelChange.labelStringToArray(article.getNewTags())
-        );
-        article.setTags(article.getOldTags() + ',' + article.getNewTags());
+        if (tagsString2.length == 0 || Objects.equals(tagsString2[0], "")) {
+            article.setNewTags("");
+            article.setNewTagsArray(new String[0]);
+        } else {
+            article.setNewTags(
+                    LabelChange.labelArrayToString(tagsString2)
+            );
+            article.setNewTagsArray(
+                    LabelChange.labelStringToArray(article.getNewTags())
+            );
+        }
+        String[] tagsString3 = article.getRemoveTags().split("&");
+        if (tagsString3.length == 0 || Objects.equals(tagsString3[0], "")) {
+            article.setRemoveTags("");
+            article.setRemoveTagsArray(new String[0]);
+        } else {
+            article.setRemoveTags(
+                    LabelChange.labelArrayToString(tagsString3)
+            );
+            article.setRemoveTagsArray(
+                    LabelChange.labelStringToArray(article.getRemoveTags())
+            );
+        }
+        String[] tagsString4 = article.getBeforeTags().split("&");
+        if (tagsString4.length == 0 || Objects.equals(tagsString4[0], "")) {
+            article.setBeforeTags("");
+            article.setBeforeTagsArray(new String[0]);
+        } else {
+            article.setBeforeTags(
+                    LabelChange.labelArrayToString(tagsString4)
+            );
+            article.setBeforeTagsArray(
+                    LabelChange.labelStringToArray(article.getBeforeTags())
+            );
+        }
+        if (Objects.equals(article.getOldTags(), "")) {
+            article.setTags(article.getNewTags());
+        } else {
+            if (Objects.equals(article.getNewTags(), "")) {
+                article.setTags(article.getOldTags());
+            } else {
+                article.setTags(article.getOldTags() + ',' + article.getNewTags());
+            }
+        }
         return article;
     }
 }

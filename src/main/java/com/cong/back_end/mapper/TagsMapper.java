@@ -17,6 +17,8 @@ public interface TagsMapper {
     // 更新旧标签的文章个数
     int updateOldTag(String tag);
     
+    int updateRemoveTag(String tag);
+    
     // 添加新标签
     int insertTag(String tag);
     

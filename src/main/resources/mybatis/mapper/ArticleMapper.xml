@@ -16,4 +16,12 @@
     <select id="getArticle" resultType="Article">
         select * from mybatis.Article where id = #{id}
     </select>
+    
+    <update id="addViews">
+        update mybatis.Article set views = views + 1 where id=#{id}
+    </update>
+    
+    <update id="updateArticle" parameterType="Article">
+        update mybatis.Article set title = #{title},content = #{content},tags = #{tags}, editDate = #{date} where id=#{id}
+    </update>
 </mapper>

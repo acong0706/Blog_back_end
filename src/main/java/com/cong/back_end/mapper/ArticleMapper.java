@@ -21,4 +21,8 @@ public interface ArticleMapper {
     List<Article> getAllArticles();
     
     Article getArticle(int id);
+    
+    int addViews(int id);
+    
+    int updateArticle(Article article);
 }

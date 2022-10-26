@@ -8,6 +8,10 @@
         update mybatis.Tags set count = count + 1 where tag=#{tag}
     </update>
     
+    <update id="updateRemoveTag" parameterType="String">
+        update mybatis.Tags set count = count - 1 where tag=#{tag}
+    </update>
+    
     <insert id="insertTag" parameterType="String">
         insert into mybatis.Tags(tag) values (#{tag})
     </insert>
