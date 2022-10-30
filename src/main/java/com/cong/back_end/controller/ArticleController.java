@@ -34,8 +34,11 @@ public class ArticleController {
     
     @PostMapping("/publish")
     public JSONObject publish(Article article) {
-        // 内容无误
-        article = dataProcess(article);
+        System.out.println("=============");
+        System.out.println(article);
+        System.out.println("=============");
+        article = dataProcess(article);  // 内容无误
+        System.out.println(article);
         jsonObject = new JSONObject();
         // true: 发布成功
         // false: 发布失败
@@ -91,6 +94,24 @@ public class ArticleController {
         );
         jsonObject = new JSONObject();
         jsonObject.put("result", result);
+        return jsonObject;
+    }
+    
+    @GetMapping("/top5_archive")
+    public JSONObject top5_archive() {
+        jsonObject = new JSONObject();
+        List<Article> articles1 = articleService.getTop5();
+        jsonObject.put("articles1", articles1);
+        List<Article> articles2 = articleService.getArchive();
+        jsonObject.put("articles2", articles2);
+        return jsonObject;
+    }
+    
+    @PostMapping("/getArticlesByArchive")
+    public JSONObject getArticlesByArchive(Article article) {
+        jsonObject = new JSONObject();
+        List<Article> articles = articleService.getArticlesByArchive(article);
+        jsonObject.put("articles", articles);
         return jsonObject;
     }
     
@@ -155,6 +176,8 @@ public class ArticleController {
                 article.setTags(article.getOldTags() + ',' + article.getNewTags());
             }
         }
+        // 通过发布时间更新yearMonth
+        article.setYearMonth(article.getPublishDate().substring(0, 7));
         return article;
     }
 }

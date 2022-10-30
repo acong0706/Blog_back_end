@@ -5,12 +5,12 @@
 <mapper namespace="com.cong.back_end.mapper.ArticleMapper">
     
     <insert id="insertArticle" parameterType="Article" useGeneratedKeys="true" keyProperty="id">
-        insert into mybatis.Article(author,title,content,publishDate,tags,editDate) values
-               (#{author},#{title},#{content},#{date},#{tags},#{date})
+        insert into mybatis.Article(author,title,content,publishDate,tags,editDate,yearMonth) values
+               (#{author},#{title},#{content},#{date},#{tags},#{date},#{yearMonth})
     </insert>
     
     <select id="getAllArticles" resultType="Article">
-        select id,author,title,publishDate,tags from mybatis.Article
+        select id,author,title,publishDate,tags from mybatis.Article order by publishDate desc
     </select>
     
     <select id="getArticle" resultType="Article">
@@ -24,4 +24,16 @@
     <update id="updateArticle" parameterType="Article">
         update mybatis.Article set title = #{title},content = #{content},tags = #{tags}, editDate = #{date} where id=#{id}
     </update>
+    
+    <select id="getTop5" resultType="Article">
+        SELECT id,title FROM mybatis.Article order by views DESC limit 5
+    </select>
+    
+    <select id="getArchive" resultType="Article">
+        select yearMonth from (SELECT * FROM mybatis.Article order by yearMonth desc) as yearMonthGroup group by yearMonth;
+    </select>
+    
+    <select id="getArticlesByArchive" parameterType="Article" resultType="Article">
+        select id,author,title,publishDate,tags from mybatis.Article where yearMonth=#{yearMonth} order by publishDate desc
+    </select>
 </mapper>

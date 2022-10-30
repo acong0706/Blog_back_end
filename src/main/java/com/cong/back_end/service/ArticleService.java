@@ -21,4 +21,10 @@ public interface ArticleService {
     int addViews(int id);
     
     boolean editArticle(Article article);
+    
+    List<Article> getTop5();
+    
+    List<Article> getArchive();
+    
+    List<Article> getArticlesByArchive(Article article);
 }

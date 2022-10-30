@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cong.back_end.mapper.AccessMapper">
+    
+    <select id="getThreeAccess" resultType="AccessNum">
+        SELECT * FROM mybatis.Access order by dateTime desc limit 3;
+    </select>
+    
+    <update id="updateAccess">
+        update mybatis.Access set num = num + 1 where id=#{id}
+    </update>
+    
+</mapper>

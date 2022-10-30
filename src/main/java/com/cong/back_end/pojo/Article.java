@@ -20,6 +20,7 @@ public class Article {
     private String date;
     private String publishDate;
     private String editDate;
+    private String yearMonth;
     private String oldTags;
     private String beforeTags;
     private String newTags;

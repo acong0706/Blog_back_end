@@ -107,4 +107,19 @@ public class ArticleServiceImpl implements ArticleService {
             return false;
         }
     }
+    
+    @Override
+    public List<Article> getTop5() {
+        return articleMapper.getTop5();
+    }
+    
+    @Override
+    public List<Article> getArchive() {
+        return articleMapper.getArchive();
+    }
+    
+    @Override
+    public List<Article> getArticlesByArchive(Article article) {
+        return articleMapper.getArticlesByArchive(article);
+    }
 }
